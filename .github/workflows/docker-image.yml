@@ -34,7 +34,7 @@ jobs:
           file: ./client/Dockerfile.dev
           push: true
           tags: bujaretemi1998/react-test:latest
-      - name: Deploy to Kubernetes
+      - name: Deploy to Kubernetes  
         uses: ./gcloud/setup-gcloud
         with:
           project_id: multi-k8s-383816
