@@ -33,6 +33,7 @@ jobs:
           file: ./client/Dockerfile.dev
           push: true
           tags: bujaretemi1998/react-test:latest
+          no-cache: true
       - name: Check out setup-gcloud action
         uses: actions/checkout@v2
         with:
