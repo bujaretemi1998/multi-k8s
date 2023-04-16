@@ -24,7 +24,7 @@ jobs:
           context: .
           file: ./client/Dockerfile.dev
           push: true
-          tags: stephengrider/react-test:latest
+          tags: bujaretemi1998/react-test:latest
       - name: Deploy to Kubernetes
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
