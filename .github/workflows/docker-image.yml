@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: GoogleCloudPlatform/github-actions
-          ref: v1.5.2
+          ref: main
           path: gcloud
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
