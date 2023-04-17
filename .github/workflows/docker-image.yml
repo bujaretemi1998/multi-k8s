@@ -30,7 +30,7 @@ jobs:
           tags: bujaretemi1998/react-test:latest
           no-cache: true
       - name: Deploy to Kubernetes
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
         with:
           project_id: multi-k8s-384009
           service_account_key: ${{ secrets.GCP_SA_KEY }}
