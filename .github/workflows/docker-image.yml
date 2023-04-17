@@ -33,7 +33,7 @@ jobs:
           no-cache: true
 
       - name: Configure gcloud CLI
-        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@main
         with:
           project_id: multi-k8s-384009
           service_account_key: ${{ secrets.GCP_SA_KEY }}
