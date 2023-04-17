@@ -24,17 +24,17 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           driver: docker-container
+      - name: Install Required Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install openssl
       - name: Decrypt JSON key file
-        uses: actions/encrypted-secrets@v3
+        uses: garygrossgarten/github-action-encrypted-secrets@v3.1.1
         with:
           secrets: |
             GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
             ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
             ENCRYPTION_IV: ${{ secrets.ENCRYPTION_IV }}
-      - name: Store decrypted JSON key file
-        run: |
-          echo "$GCP_SA_KEY" > key.json.enc
-          openssl aes-256-cbc -d -K ${{ secrets.ENCRYPTION_KEY }} -iv ${{ secrets.ENCRYPTION_IV }} -in key.json.enc -out key.json
       - name: Authenticate with gcloud
         run: |
           gcloud auth activate-service-account --key-file=key.json
