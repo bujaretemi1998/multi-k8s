@@ -1,5 +1,3 @@
-name: CI/CD
-
 on:
   push:
     branches:
@@ -18,11 +16,9 @@ jobs:
         with:
           driver: docker-container
       - name: Decrypt JSON key file
-        uses: appleboy/decrypt-file@v1
-        with:
-          input: service-account.json.enc
-          output: service-account.json
-          passphrase: ${{ secrets.ENCRYPTION_KEY }}
+        run: |
+          echo ${{ secrets.ENCRYPTED_JSON_KEY }} | base64 --decode > service-account.json.enc
+          openssl aes-256-cbc -K ${{ secrets.ENCRYPTION_KEY }} -iv ${{ secrets.ENCRYPTION_IV }} -in service-account.json.enc -out service-account.json -d
       - name: Authenticate with gcloud
         run: |
           curl https://sdk.cloud.google.com | bash > /dev/null;
