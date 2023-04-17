@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SHA: ${{ github.sha }}
+      working-directory: ./
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
