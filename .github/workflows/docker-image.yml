@@ -25,11 +25,16 @@ jobs:
         with:
           driver: docker-container
       - name: Decrypt JSON key file
-        uses: appleboy/decrypt-file@v1.1.1
+        uses: actions/encrypted-secrets@v3
         with:
-          file: key.json.enc
-          secret: ${{ secrets.ENCRYPTION_KEY }}
-          iv: ${{ secrets.ENCRYPTION_IV }}
+          secrets: |
+            GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+            ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+            ENCRYPTION_IV: ${{ secrets.ENCRYPTION_IV }}
+      - name: Store decrypted JSON key file
+        run: |
+          echo "$GCP_SA_KEY" > key.json.enc
+          openssl aes-256-cbc -d -K ${{ secrets.ENCRYPTION_KEY }} -iv ${{ secrets.ENCRYPTION_IV }} -in key.json.enc -out key.json
       - name: Authenticate with gcloud
         run: |
           gcloud auth activate-service-account --key-file=key.json
@@ -43,12 +48,11 @@ jobs:
           push: true
           tags: bujaretemi1998/react-test:latest
           no-cache: true
-      - name: Deploy to Kubernetes  
-        uses: ./gcloud/setup-gcloud
+      - name: Deploy to Kubernetes
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           project_id: multi-k8s-384009
           service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
       - name: Set Kubectl context
         run: gcloud container clusters get-credentials multi-cluster
       - name: Deploy to Kubernetes
