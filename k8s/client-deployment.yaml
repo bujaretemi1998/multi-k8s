@@ -16,4 +16,4 @@ spec:
         - name: client
           image: bujaretemi1998/multi-client2
           ports:
-            - containerPort: 80
+            - containerPort: 3000
